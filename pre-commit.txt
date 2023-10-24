@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Define a regular expression to match tabs (a tab followed by any character)
+TAB_REGEX=$'\t'
+
+# Use git diff to list the staged (to be committed) files
+# Check each file for the presence of tabs
+if git diff --cached --name-only | xargs grep -E "$TAB_REGEX"; then
+  echo "Commit failed: Tabs found in staged files. Please remove tabs before committing."
+  exit 1
+fi
